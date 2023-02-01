@@ -1,0 +1,385 @@
+{% extends "base.html" %} {% load humanize %} {% load customfilter %} {% block pageContent %}
+
+<!--Section: Content-->
+<section class="">
+    <h2 class="fw-bolder">Welcome, {{user.first_name}}&nbsp;{{user.last_name}}!</h2>
+    <hr>
+    <div class="row justify-content-center">
+
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-info bg-opacity-75 text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-users"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{employees}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Employees</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-dark bg-opacity-75 text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-soap"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{products|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Products</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-success bg-opacity-75 text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-file-invoice"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{todays_invoice|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Today's Invoices</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 px-1 pb-2">
+            <div class="card card-default rounded-0 shadow bg-gradient bg-warning bg-opacity-75 text-light">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row mx-0 w-100 align-items-center">
+                            <div class="col-3">
+                                <i class="fs-1 text-light fa fa-coins"></i>
+                            </div>
+                            <div class="col-9">
+                                <h1 class="text-end">{{todays_achat|floatformat|intcomma}}</h2>
+                            </div>
+                            <div class="col-12 text-end"><b>Total Amount</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+      
+</section> <br><br>
+
+<div class="row">
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">All Products</h5>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="bg-white">
+                    <canvas id="myChart" width="400" height="300"></canvas>
+                    <script>
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Bottle', 'Boite', 'Carduna'],
+                        datasets: [{
+                            label: 'Products',
+                            data: [{{bottle_count}}, {{boite_count}}, {{carduna_count}}],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(25, 159, 64, 1)',
+                                'rgba(211, 99, 12, 1)',
+                                'rgba(234, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(34, 142, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(25, 159, 64, 1)',
+                                    'rgba(211, 99, 12, 1)',
+                                    'rgba(234, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(34, 142, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderWidth: 1
+                          }]
+                      },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                  });
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">Daily Expenses</h5>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="bg-white">
+                    <canvas id="myChart1" width="400" height="300"></canvas>
+                    <script>
+                        var ctx = document.getElementById('myChart1').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Bessim Mkouar', 'Choukri Douma'],
+                        datasets: [{
+                            label: 'Expenses',
+                            data: [{{bessim_expenses}}, {{chokri_expenses}}],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(25, 159, 64, 1)',
+                                'rgba(211, 99, 12, 1)',
+                                'rgba(234, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(34, 142, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(25, 159, 64, 1)',
+                                    'rgba(211, 99, 12, 1)',
+                                    'rgba(234, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(34, 142, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderWidth: 1
+                          }]
+                      },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                  });
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">Daily Rest</h5>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="bg-white">
+                    <canvas id="myChart2" width="400" height="300"></canvas>
+                    <script>
+                        var ctx = document.getElementById('myChart2').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Bessim Mkouar', 'Chokri Douma'],
+                        datasets: [{
+                            label: 'Rest',
+                            data: [{{bessim_rest}}, {{chokri_rest}}],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(25, 159, 64, 1)',
+                                'rgba(211, 99, 12, 1)',
+                                'rgba(234, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(34, 142, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(25, 159, 64, 1)',
+                                    'rgba(211, 99, 12, 1)',
+                                    'rgba(234, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(34, 142, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderWidth: 1
+                          }]
+                      },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                  });
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">Monthly Expenses</h5>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="bg-white">
+                    <canvas id="myChart3" width="400" height="300"></canvas>
+                    <script>
+                        var ctx = document.getElementById('myChart3').getContext('2d');
+                        
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Bessim Mkouar', 'Chokri Douma'],
+                        datasets: [{
+                            label: 'Monthly Expenses',
+                            data: [{{bessim_report}}, {{chokri_report}}],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(25, 159, 64, 1)',
+                                'rgba(211, 99, 12, 1)',
+                                'rgba(234, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(34, 142, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(25, 159, 64, 1)',
+                                    'rgba(211, 99, 12, 1)',
+                                    'rgba(234, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(34, 142, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderWidth: 1
+                          }]
+                      },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                  });
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>        
+
+
+</div> {% endblock pageContent %} {% block ScriptBlock %}
+<script>
+</script>
+{% endblock ScriptBlock %}

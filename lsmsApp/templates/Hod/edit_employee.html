@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block pageContent %}
+{% include "includes/TopNavigation.html" %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="card animated fadeInUp">
+            <div class="card-body">
+                <form method="post" action="{% url 'update_employee' %}"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                        <h4 class="form-title"><span>Edit Employee</span></h4>
+                  
+                    <div class="form-group">
+                        
+                        <input type="text" class="form-control" name="employee_id" value="{{employee.admin.id}}" hidden
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{employee.admin.first_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{employee.admin.last_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" value="{{employee.admin.email}}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username" value="{{employee.admin.username}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password"
+                            placeholder="Fill Only If You Want To Change Password ">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea class="form-control" name="address">{{employee.address}}</textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" name="gender" value="{{employee.gender}}">
+                            <option>Select Gender</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+        
+                    <button type="submit" class="btn btn-primary">Update Employee</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock pageContent %}

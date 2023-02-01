@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block pageContent %}
+{% include "includes/TopNavigation.html" %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="card animated fadeInUp">
+            <div class="card-body">
+                <form method="post" action="{% url 'update_cost' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h4 class="form-title"><span>Edit Cost</span></h4>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="cost_id" value="{{cost.id}}" required
+                            hidden>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="description" value="{{cost.description}}">
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" class="form-control" name="amount" value="{{cost.amount|floatformat}}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock pageContent %}

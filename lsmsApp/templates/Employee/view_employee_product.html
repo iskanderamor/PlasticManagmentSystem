@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block pageContent %}
+<section class="py-4">
+    <div class="container">
+        <div class="card rounded-0 shadow">
+            <div class="card-header py -1">
+                <div class="d-flex w-100 align-items-center">
+                    <div class="card-title mb-0 col-auto flex-shrink-1 flex-grow-1">Product Details</div>
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid" id="e-details">
+                    <div class="lh-1">
+                        <dl>
+                            <dt>Product Type</dt>
+                            <dd class="ps-4">{{employeeproduct.product_type}}</dd>
+                            <dt>Price</dt>
+                            <dd class="ps-4">{{employeeproduct.price|floatformat:2|intcomma}}</dd>
+                            <dt>Status</dt>
+                            <dd class="ps-4">
+                                {% if employeeproduct.status == '1' %}
+                                <span class="badge badge-success bg-gradient bg-success px-3 rounded-pill bg-opacity-75 text-sm py-1">Active</span> {% else %}
+                                <span class="badge badge-secondary bg-gradient bg-secondary px-3 rounded-pill bg-opacity-75 text-sm py-1">Inactive</span> {% endif %}
+                            </dd>
+                            
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock pageContent %} {% block ScriptBlock %}
+<script>
+    
+
+
+    
+</script>
+{% endblock ScriptBlock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block pageContent %} {% include "includes/TopNavigation.html" %}
+<section class="py-4">
+   <div class="container">
+      <h3 class="fw-bolder text-center">List of Employees</h3>
+      <center>
+         <hr class="bg-primary opacity-100" style="height:3px" width="5%">
+      </center>
+      <div class="card rounded-0 shadow">
+         <div class="card-body">
+
+            <div class="container-fluid">
+               <div class="text-end mb-3">
+                  <button class="btn btn-sm btn-primary rounded-0 bg-gradient-primary" type="button" data-toggle="modal"
+                     data-target="#modal_add_employee"><i class="fa fa-plus"></i> Add New</button>
+               </div>
+               {% if employee %}
+               <div class="table-responsive">
+                  <table class="table table-bordered table-striped" id="table_id">
+                     <colgroup>
+                        <col width="5%">
+                        <col width="30%%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="15%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th class="text-center">#</th>
+                           <th class="text-center">Date Added</th>
+                           <th class="text-center">Name</th>
+                           <th class="text-center">Email</th>
+                           <th class="text-center">Gender</th>
+                           <th class="text-center">Address</th>
+                           <th class="text-center">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for i in employee %}
+                        <tr>
+                           <td class="text-center">{{ forloop.counter }}</td>
+                           <td>{{i.date_added|date:'M-d-Y H:i'}}</td>
+                           <td>{{ i.admin.first_name}} {{ i.admin.last_name}}</td>
+                           <td>{{i.admin.email}}</td>
+                           <td>{{i.gender}}</td>
+                           <td>{{i.address}}</td>
+                           <td class="text-center">
+                              <div class="dropdown">
+                                 <button class="btn btn-light btn-sm rounded-0 border dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                 </button>
+                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item edit-data" href="{% url 'edit_employee' i.id %}"><i
+                                             class="fa fa-edit text-primary"></i> Edit</a></li>
+                                    <li><a class="dropdown-item delete-data" href="{% url 'delete_employee' i.id %}"><i
+                                             class="fa fa-trash text-danger"></i> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+               {% else %}
+               <h3>No Employees Available</h3>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<div class="modal fade" id="modal_add_employee" tabindex="-1" role="dialog" aria-hidden="true"
+   style="overflow-y: auto !important">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <!-- Header -->
+         <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <!-- Body -->
+         <div class="modal-body">
+            <form method="POST" action="{% url 'add_employee' %}" enctype="multipart/form-data">
+               {%csrf_token%}
+
+
+               <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" name="first_name" required>
+               </div>
+               <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" name="last_name" required>
+               </div>
+               <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" name="email" required>
+               </div>
+               <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" name="username" required>
+               </div>
+               <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" name="password" required>
+               </div>
+               <div class="form-group">
+                  <label>Address</label>
+                  <textarea class="form-control" name="address" required></textarea>
+               </div>
+               <div class="form-group">
+                  <label>Gender</label>
+                  <select class="form-control" name="gender" required>
+                     <option>Select Gender</option>
+                     <option value="Female">Female</option>
+                     <option value="Male">Male</option>
+                     <option value="Others">Others</option>
+                  </select>
+               </div>
+               <!--Footer-->
+               <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit">Save</button>
+                  <button class="btn btn-outline-danger" data-dismiss="modal" type="reset">Close</button>
+               </div>
+
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock pageContent %} {% block ScriptBlock %}
+<script>
+   $(function () {
+      $('#table_id').find('td, th').addClass('px-2 py-1 align-middle')
+      $('#table_id').DataTable({
+         columnDefs: [{
+            orderable: false,
+            targets: [4]
+         }],
+         lengthMenu: [
+            [25, 50, 100, -1],
+            [25, 50, 100, "All"]
+         ]
+      })
+   })
+</script>
+{% endblock ScriptBlock %}

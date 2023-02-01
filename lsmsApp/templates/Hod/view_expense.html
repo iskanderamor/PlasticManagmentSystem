@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block pageContent %} {% include "includes/TopNavigation.html" %}
+<section class="py-4">
+   <div class="container">
+      <h3 class="fw-bolder text-center">List of Expenses</h3>
+      <center>
+         <hr class="bg-primary opacity-100" style="height:3px" width="5%">
+      </center>
+      <div class="card rounded-0 shadow">
+         <div class="card-body">
+
+            <div class="container-fluid">
+               <div class="text-end mb-3">
+                  <button class="btn btn-sm btn-primary rounded-0 bg-gradient-primary" type="button" data-toggle="modal"
+                     data-target="#modal_add_expense"><i class="fa fa-plus"></i> Add New</button>
+               </div>
+               {% if expense %}
+               <div class="table-responsive">
+                  <table class="table table-bordered table-striped" id="table_id">
+                     <colgroup>
+                        <col width="5%">
+                        <col width="30%%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="15%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th class="text-center">#</th>
+                           <th class="text-center">Date Added</th>
+                           <th class="text-center">Employee</th>
+                           <th class="text-center">Amount</th>
+                           <th class="text-center">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for i in expense %}
+                        <tr>
+                           <td class="text-center">{{ forloop.counter }}</td>
+                           <td>{{i.date_added|date:'M-d-Y H:i'}}</td>
+                           <td>{{ i.employee.admin.username}}</td>
+                           <td>{{i.amount|floatformat|intcomma}}</td>
+                           <td class="text-center">
+                              <div class="dropdown">
+                                 <button class="btn btn-light btn-sm rounded-0 border dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                 </button>
+                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item edit-data" href="{% url 'edit_expense' i.id %}"><i
+                                             class="fa fa-edit text-primary"></i> Edit</a></li>
+                                    <li><a class="dropdown-item delete-data" href="{% url 'delete_expense' i.id %}"><i
+                                             class="fa fa-trash text-danger"></i> Delete</a></li>
+                                 </ul>
+                              </div>
+                           </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+               {% else %}
+               <h3>No Expenses Available</h3>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<div class="modal fade" id="modal_add_expense" tabindex="-1" role="dialog" aria-hidden="true"
+   style="overflow-y: auto !important">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <!-- Header -->
+         <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Add Expense</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <!-- Body -->
+         <div class="modal-body">
+            <form method="POST" action="{% url 'add_expense' %}" enctype="multipart/form-data">
+               {%csrf_token%}
+               <div class="form-group">
+                  <label>Employee</label>
+                  <select class="form-control" name="employee_id" required>
+                     <option>Select Employee</option>
+                     {% for i in employee %}
+                     <option value="{{i.id}}">{{i.admin.username}}</option>
+                     {% endfor %}
+                  </select>
+               </div>
+               <div class="form-group">
+                  <label>Amount</label>
+                  <input type="number" class="form-control" name="amount" required>
+               </div>
+              
+               <!--Footer-->
+               <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit">Save</button>
+                  <button class="btn btn-outline-danger" data-dismiss="modal" type="reset">Close</button>
+               </div>
+
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock pageContent %} {% block ScriptBlock %}
+<script>
+   $(function () {
+      $('#table_id').find('td, th').addClass('px-2 py-1 align-middle')
+      $('#table_id').DataTable({
+         columnDefs: [{
+            orderable: false,
+            targets: [4]
+         }],
+         lengthMenu: [
+            [25, 50, 100, -1],
+            [25, 50, 100, "All"]
+         ]
+      })
+   })
+</script>
+{% endblock ScriptBlock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}{% load static %}{% block pageContent %} {% include "includes/TopNavigation.html" %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+            <div class="card card-default rounded-0 shadow">
+                <div class="card-header">
+                    <h4 class="card-title"><b>Update Account Details</b></h4>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <form id="update-user" method="POST" action="{% url 'profile_update' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mdc-layout-grid">
+                                <div class="mdc-layout-grid__inner">
+                                    <div class="form-group mb-3">
+                                        <label for="first_name" class="control-label">First Name</label>
+                                        <input type="text" class="form-control rounded-0" name="first_name" id="first_name" value="{{ user.first_name }}" required="required">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="last_name" class="control-label">Last Name</label>
+                                        <input type="text" class="form-control rounded-0" name="last_name" id="last_name" value="{{ user.last_name }}" required="required">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="username" class="control-label">Username</label>
+                                        <input type="text" class="form-control rounded-0" name="username" id="username" value="{{ user.username }}" required="required">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="email" class="control-label">Email</label>
+                                        <input type="email" class="form-control rounded-0" name="email" id="email" value="{{ user.email }}" required="required">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="current_password" class="control-label">Enter Password</label>
+                                        <input type="password" class="form-control rounded-0" name="current_password" id="current_password" placeholder="Fill Only If You Want To Change Password ">
+                                    </div>
+                                    
+                                    <div class="form-group mb-3">
+                                        <div class="d-flex w-100 justify-content-end">
+                                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock pageContent %}
